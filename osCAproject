@@ -1,0 +1,101 @@
+#include<iostream>
+using namespace std;
+int main()
+{
+int i,m;
+
+cout<<"\nEnter number of processes";
+cin>>m;
+
+int arrival[m];
+int burst[m],burst1[m];
+int waiting[m];
+int tarrival[m];
+int tq1=3;
+int tq2=6;
+int avgTT=0;
+int avgWT=0;
+
+cout<<"\nEnter Arrival time of processes:";
+    for(i=0;i<m;i++)
+    {
+        cout<<"\nfor processes "<<i+1<<" : ";
+        cin>>arrival[i];
+    }
+
+cout<<"\nEnter Burst time for processes:";
+    for(i=0;i<m;i++)
+    {
+        cout<<"\nfor processes "<<i+1<<" : ";
+        cin>>burst[i];
+        burst1[i]=burst[i];
+    }
+
+cout<<"1st Iteration(TQ=3)\n";
+    for(i=0;i<m;i++)
+        {
+            if(arrival[i]<=tq1+arrival[i-1])
+            {
+            burst[i]=burst[i]-tq1;
+            cout<<"\nProcess "<<i+1;
+            cout<<"\nLeft="<<burst[i];
+            }
+           
+            else
+            {
+            burst[i]=burst[i]-tq1;
+            cout<<"\nprocess "<<i+1;
+            cout<<"\nLeft= "<<burst[i];
+            }
+        }
+
+cout<<"\nAFTER Iteration 2 (TQ=6)";
+    for(i=0;i<m;i++)
+        {
+            if(arrival[i]<=tq2+arrival[i-1])
+            {
+                burst[i]=burst[i]-tq2;
+                cout<<"\nprocess "<<i+1;
+                cout<<"\nLeft= "<<burst[i];
+            }
+            else
+            {
+                burst[i]=burst[i]-tq2;
+                cout<<"\nprocess "<<i+1;
+                cout<<"\nLeft= "<<burst[i];
+            }
+        }
+
+cout<<"\n3rd Iteration";
+int j,temp;
+
+    for(i=0;i<m;i++)
+    {
+        for(j=i+1;j<m;j++)
+            {
+                if(burst[i]>burst[j])
+                    {
+                        temp=burst[i];
+                        burst[i]=burst[j];
+                        burst[j]=temp;
+                    }
+            }
+    }
+
+int ct[4]={54,68,45,41};
+    for(i=0;i<m;i++)
+        {
+            tarrival[i]=ct[i]-arrival[i];
+            waiting[i]=tarrival[i]-burst1[i];
+            cout<<"\nCompletion time for process "<<i+1<<": "<<ct[i]<<endl;
+            cout<<"Turn around time for process "<<i+1<<": "<<tarrival[i]<<endl;
+            cout<<"Waiting time for process "<<i+1<<": "<<waiting[i]<<endl;
+            avgTT=avgTT+tarrival[i];
+            avgWT=avgWT+waiting[i];
+        }
+
+avgTT=avgTT/m;
+avgWT=avgWT/m;
+cout<<"\nAverage turn around time: "<<avgTT;
+cout<<"\nAverage waiting time: "<<avgWT;
+}
